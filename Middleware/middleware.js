@@ -1,21 +1,13 @@
-// fetch api using localhost:2000/name
-
-// Path: Middleware\middleware.js
-
 const graphql_client = require('graphql-client');
-const client = graphql_client({
-    url: 'http://localhost:2000/name',
-});
+const controller = require('../warehouse/controller/controller');
 
-const output = client.query(`
-    query {
-        name {
-            name
-        }
-    }
-`).then((data) => {
-    console.log(data);
-});
+const router = express.router();
 
+// const out = controller.addProduct({product_id:"1" ,product_name: "test", product_quantity: 10, product_price: 10 });
 
-console.log("got data"  + output);
+// if(out){
+//     console.log("data entered");
+// }else{
+//     console.log("data not entered")
+// }
+
