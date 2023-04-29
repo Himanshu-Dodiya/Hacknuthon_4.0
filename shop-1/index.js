@@ -5,6 +5,7 @@ const axios = require("axios");
 const app = express();
 const port = process.env.PORT || 5000;
 const apiData = "./orders.json";
+const rateLimit = require("express-rate-limit");
 
 // let Data = fs.readFileSync("./orders.json");
 let Stock = [
@@ -34,8 +35,20 @@ let Stock = [
   }
 ];
 
+// limit each client to 10 requests per minute
+const limiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 20, // limit each client to 20 requests per windowMs
+  onLimitReached: function (req, res, options) {
+    res.status(600).send("Too many requests from this IP, please try again later.");
+  },
+});
+
+
+app.use(limiter);
 app.use(express.json());
 app.use(cors());
+
 // Read all orders
 // app.get("/orders", (req, res) => {
 //   fs.readFile(apiData, (err, data) => {
@@ -184,6 +197,10 @@ app.post("/sellItem",(req,res)=>{
   }
 
 })
+
+app.get("/stock", (req, res) => {
+  res.send(Stock);
+});
 
 // Start the server
 app.listen(port, () => {
