@@ -51,15 +51,17 @@ router.post("/sell", (req, res) => {
 	console.log(req.query.me);
 	console.log(req.body);  
 	const name = mapping[req.query.me];
-	if (!req.body) {
+	if (req.body == undefined) {
 		res.status(400).send();
+	}else{
+		controller.DecrementProductQuantity(
+			req.body.id,
+			req.body.count,
+			name,
+			req.query.me
+			);
 	}
-	controller.DecrementProductQuantity(
-		req.body.id,
-		req.body.count,
-		name,
-		req.query.me
-	);
+	res.end();
 });
 
 module.exports = router;
