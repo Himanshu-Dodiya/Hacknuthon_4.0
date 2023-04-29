@@ -133,6 +133,7 @@ app.use(cors());
 // });
 
 app.post("/itemChange", function updatedItem(req, res) {
+  console.log("item change request found");
   let updatedObj = req.body;
   let stock = fs.readFileSync("./stock.json");
   stock.forEach((obj) => {
@@ -151,33 +152,28 @@ app.post("/sellItem",(req,res)=>{
   try{
    console.log("itm sell request found",req.body);
     // const {id} = req.body;
-    let change = true,changedObj;
+    let change = false,changedObj;
     // console.log(Stock)
-    // Stock.forEach((obj)=>{
-    //   console.log(obj)
-    //   if(obj.item_id == req.body.id){
-    //     obj.item_quantity -= req.body.quantity;
-    //     change = true;
-    //     changedObj = obj;
-    //     console.log(changedObj);
-    //   }
-    // })
-    changedObj = {
-        "item_id":"1", 
-        "item_name":"apple",
-        "item_price":50000,
-        "item_quantity":10
-    }
+    Stock.forEach((obj)=>{
+      console.log(obj)
+      if(obj.item_id == req.body.id){
+        obj.item_quantity -= req.body.quantity;
+        change = true;
+        changedObj = obj;
+        console.log(changedObj);
+      }
+    })
+    var newObj = {me:0,id:changedObj.item_id,name:changedObj.item_name,count:req.body.quantity}
     if(change){
       console.log("req send")
       const option = {
-        url : "http://192.168.77.88:4000/sell?me=0",
+        url : "http://192.168.77.88:4000/itemSell",
         method : "post",
-        data : changedObj,
-         headers: { "Content-Type": "multipart/form-data" },
+        data : JSON.stringify(newObj),
+         headers: { "Content-Type": "application/json" },
       }
       axios(option).then((res) => {
-      console.log(res);
+      console.log("respones recieved");
     }).catch(err => {
       console.log("err");
     })
