@@ -11,19 +11,10 @@ const connect = function () {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
-    if(url.indexOf('localhost')!=-1) {
-        console.log("connected to local db");
-    }else{
-        console.log('Database connected with remote db');
-    }
-    }catch(err){
-        console.log("connection error trying to connect with local db");
-        mongoose.connect("mongodb://localhost:27017/ComputerLab",{
-            useNewUrlParser: true,
-            useUnifiedTopology:true
-        });
-        console.log("connected to local db");
-    }
+    console.log("Connected to database");
+}catch(err){
+    console.log(err);
+}
 }
 
 module.exports = connect;

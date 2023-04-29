@@ -11,4 +11,4 @@ app.listen(4000, () => {
     }
 );
 
-app.use('/', api_router);
+app.get("/", controller.addProduct);

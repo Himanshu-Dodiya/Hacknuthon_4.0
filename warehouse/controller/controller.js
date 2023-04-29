@@ -1,6 +1,6 @@
 const Product = require('../model/product');
 
-data = {
+var data = {
     product_id: "P0001",
     product_name: "Product 1",
     product_price: 100,
@@ -70,4 +70,18 @@ function DecrementProductQuantity(id, count) {
         }
     });
 }
+
+function updatePrice(id,price){
+    Product.findByIdAndUpdate(id, { product_price: price }, (err, product) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).send();
+        }
+        else {
+            console.log("Product price updated");
+            console.log(product);
+        }
+    });
+}
+
 
