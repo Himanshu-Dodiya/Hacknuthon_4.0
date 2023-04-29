@@ -46,7 +46,7 @@ exports.sendOther = (id, data) => {
 	}
 };
 
-router.post("/sell", (req, res) => {
+router.post("/itemSell", (req, res) => {
 	console.log("sell api request received");
 	console.log(req.query.me);
 	console.log(req.body);  
