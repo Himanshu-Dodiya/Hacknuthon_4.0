@@ -1,23 +1,16 @@
 const Product = require('../model/product');
 
-data = {
-    product_id: "P0001",
-    product_name: "Product 1",
-    product_price: 100,
-    product_quantity: 50
-}
 
-exports.addProduct = async(req, res) => {
+exports.addProduct = async (data) => {
     const product = await new Product(data)
     product.save((err, product) => {
         if (err) {
             console.log(err);
-            return res.status(500).send();
+            return false;
         }
-        res.json(product);
         console.log("Product added");
     });
-
+    return true;
 }
 
 exports.getProducts = (req, res) => {

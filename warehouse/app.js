@@ -2,7 +2,7 @@ const express = require("express");
 const connect = require("./server");
 const api_router = require("./router/api_router");
 const app = express();
-const controller = require("./controller/controller");
+const middleware = require("../Middleware/middleware");
 
 
 app.listen(4000, () => {
@@ -11,4 +11,6 @@ app.listen(4000, () => {
     }
 );
 
-app.use('/', api_router);
+process.on("uncaughtException", (err) => {
+    console.log(err);
+});
