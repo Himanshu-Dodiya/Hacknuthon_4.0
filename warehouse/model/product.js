@@ -20,6 +20,9 @@ const ProductSchema = new Schema({
     product_quantity: {
         type: Number,
         required: true
+    },
+    product_change: {
+        type: String,
     }
 });
 
