@@ -1,0 +1,26 @@
+[
+    {
+        "item_id":"1", 
+        "item_name":"apple",
+        "item_price":50000,
+        "item_quantity":10
+    },
+    {
+        "item_id":"2",
+        "item_name":"samsung",
+        "item_price":30000,
+        "item_quantity":150
+    },
+    {
+        "item_id":"4",
+        "item_name":"vivo",
+        "item_price":10000,
+        "item_quantity":50
+    },
+    {
+        "item_id":"3",
+        "item_name":"oppo",
+        "item_price":20000,
+        "item_quantity":80
+    }
+]
