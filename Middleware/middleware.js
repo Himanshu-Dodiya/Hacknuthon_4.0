@@ -12,21 +12,58 @@ const mapping = {
 	1: "shop2",
 };
 
-exports.sendOther = (id, data) => {
+const queue = {
+	shop1: [],
+	shop2: [],
+};
+
+const massDataSend = async (id,data)=>{
 	let mainData = {};
 	if (id == 0) {
 		console.log("send to shop 1");
 		mainData.item_id = data.id;
 		mainData.item_name = data.name;
 		mainData.item_quantity = data.count;
-		axios
-			.post("http://192.168.77.88:5000/itemChange", data)
-			.then((response) => {
-				console.log("response for shop-1");
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		const output = await axios.post("http://192.168.77.83:5000/--url", data);
+		console.log(output.status);
+		if(output.status == 600){
+			console.log("shop 1 is not available");
+		}else if(queue[`shop${id}`] == []){
+			console.log("queue is empty");
+		}else if(output.status == 200){
+			console.log("data sent successfully");
+			queue.shop1 = [];
+		}
+	}
+}
+
+exports.sendOther = async (id, data) => {
+	let mainData = {};
+	if (id == 0) {
+		if(queue[`shop${id}`] == []){
+		console.log("send to shop 1");
+		mainData.item_id = data.id;
+		mainData.item_name = data.name;
+		mainData.item_quantity = data.count;
+		const output = await axios.post("http://192.168.77.88:5000/itemChange", data);
+		console.log(output.status);
+		if(output.status == 600){
+			console.log("shop 1 is not available");
+			queue.shop1.push(mainData);
+		}
+	}else{
+		queue.shop1.push(mainData);
+		setTimeout(()=>{
+			massDataSend(id,queue.shop1);
+			// queue.shop1.shift();
+		},10000);
+	}
+			// .then((response) => {
+				
+			// })
+			// .catch((error) => {
+			// 	console.log(error);
+			// });
 	} else if (id == 1) {
 		console.log("send to shop 2");
 		// 192.168.77.130 do graphql query in addName by posting it
@@ -50,15 +87,19 @@ router.post("/itemSell", (req, res) => {
 	console.log("sell api request received");
 	console.log(req.body);
 	const name = mapping[req.body.me];
-	if (req.body == undefined) {
-		res.status(400).send();
+	if (req.body == JSON.stringify({}) || req.body == null) {
+		res.status(400).send("please provide details");
 	} else {
+		if(!req.body.me || req.body.me=="" ||req.body.id == "" || !req.body.id || isNaN(req.body.count) || !req.body.count || req.body.count == ""){
+			res.status(400).send("please provide details");
+		}else{
 		controller.DecrementProductQuantity(
 			req.body.id,
 			req.body.count,
 			name,
 			req.body.me
 		);
+		}
 	}
 	res.end();
 });
