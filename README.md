@@ -1,6 +1,6 @@
 # Hacknuthon_4.0
 ```
-NOTE :- every single file is an different system or say different server so all need to be started.
+NOTE :- every single file is an different system or say different server so all server(File) need to be started.
 ```
 
 ## How To Start Server
@@ -40,6 +40,5 @@ NOTE :- every single file is an different system or say different server so all 
 4.you can uncomment the middleware code to insert dummy data.
 ```
 
-```
+
 npm start will start the server on different port and postman can be used to fire all the apis
-```
