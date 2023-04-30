@@ -6,6 +6,9 @@ const app = express();
 const port = process.env.PORT || 5000;
 const apiData = "./orders.json";
 const rateLimit = require("express-rate-limit");
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // let Data = fs.readFileSync("./orders.json");
 let Stock = [
@@ -169,14 +172,14 @@ app.post("/sellItem",(req,res)=>{
     // console.log(Stock)
     Stock.forEach((obj)=>{
       console.log(obj)
-      if(obj.item_id == req.body.id){
-        obj.item_quantity -= req.body.quantity;
+      if(obj.item_id == req.body.item_id){
+        obj.item_quantity -= req.body.item_quantity;
         change = true;
         changedObj = obj;
         console.log(changedObj);
       }
     })
-    var newObj = {me:0,id:changedObj.item_id,name:changedObj.item_name,count:req.body.quantity}
+    var newObj = {me:0,id:changedObj.item_id,name:changedObj.item_name,count:req.body.item_quantity}
     if(change){
       console.log("req send")
       const option = {
@@ -188,12 +191,12 @@ app.post("/sellItem",(req,res)=>{
       axios(option).then((res) => {
       console.log("respones recieved");
     }).catch(err => {
-      console.log("err");
+      console.log(err);
     })
     }
     res.end();
   }catch(err){
-    console.log("err")
+    console.log(err)
   }
 
 })

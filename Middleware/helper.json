@@ -1,5 +1,1 @@
-[
-    {
-        
-    }
-]
+{"counter":2,"service_provider-1":{"id":2,"api_key":"x","name":"shop-3","apis":[{"type":"connection","method":"GET","url":"http://localhost:4000/hello","discription":"just welcome to server","output_type":"json","output":{"message":""},"input":{},"query":""}]},"service_provider-2":{"id":3,"api_key":"y","name":"shop-1","apis":[{"type":"itemChange","method":"POST","url":"http://localhost:5000/itemchange","discription":"just welcome to server","output_type":"json","output":{},"input":{"item_id":"","item_name":"","item_quantit":""},"query":""}]}}

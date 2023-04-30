@@ -23,7 +23,8 @@ function IncrementProductQuantity(id, count) {
 	);
 }
 
-exports.DecrementProductQuantity = async (id, count, name, seller_id) => {
+exports.DecrementProductQuantity = async (id, count, seller_id) => {
+	console.log(id, count, seller_id);
 	const product = await Product.findOneAndUpdate(
 		{ product_id: id },
 		{ $inc: { product_quantity: -count } },
