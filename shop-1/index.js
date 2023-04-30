@@ -194,7 +194,7 @@ app.post("/sellItem",(req,res)=>{
       console.log(err);
     })
     }
-    res.end();
+    res.send("data modified success");
   }catch(err){
     console.log(err)
   }

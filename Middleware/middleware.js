@@ -96,7 +96,7 @@ const massDataSend = async (id,data)=>{
 		mainData.item_id = data.id;
 		mainData.item_name = data.name;
 		mainData.item_quantity = data.count;
-		const output = await axios.post("http://192.168.77.83:5000/--url", data);
+		const output = await axios.post("http://192.168.77.83:5000/", data);
 		console.log(output.status);
 		if(output.status == 600){
 			console.log("shop 1 is not available");
