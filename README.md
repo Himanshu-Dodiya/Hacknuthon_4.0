@@ -42,3 +42,5 @@ NOTE :- every single file is an different system or say different server so all 
 
 
 npm start will start the server on different port and postman can be used to fire all the apis
+
+## the ip is need to be changed accordingly for the apis
